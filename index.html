@@ -1,40 +1,3 @@
-<?php
-// Contact form processing
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = strip_tags($_POST['name'] ?? '');
-    $visitor_email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
-    $message = strip_tags($_POST['message'] ?? '');
-    
-    // Create message content
-    $message_content = "
-Date: " . date('Y-m-d H:i:s') . "
-From: {$name}
-Email: {$visitor_email}
-Message:
-{$message}
-----------------------------------------
-";
-    
-    // Save to messages file
-    $file = 'messages/contact_messages.txt';
-    
-    // Create messages directory if it doesn't exist
-    if (!file_exists('messages')) {
-        mkdir('messages', 0777, true);
-    }
-    
-    // Try to save the message
-    if(file_put_contents($file, $message_content, FILE_APPEND | LOCK_EX)) {
-        $success_message = "Thank you for your message! I'll get back to you soon.";
-        
-        // Optional: Send notification to your email about new message
-        $notification = "New message received from your portfolio contact form. Check messages/contact_messages.txt";
-        error_log($notification);
-    } else {
-        $error_message = "Sorry, there was an error saving your message. Please try again.";
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -189,7 +152,7 @@ Message:
         <div class="container" style="z-index: 2;">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold mb-4">Hello, I'm <?php echo "Rence"; ?></h1>
+                    <h1 class="display-4 fw-bold mb-4">Hello, I'm Rence</h1>
                     <p class="lead mb-4">Hello I'm Lorenze Fernandez Prepotente but you can call me Rence in short 
                         I'm 20 years old and I live in the Philippines 
                         I'm a student of Bachelor of Science in Information System 
@@ -208,14 +171,10 @@ Message:
             <div class="row">
                 <div class="col-lg-6">
                     <p class="lead">
-                        <?php
-                        $about_text = "I'm a starting web developer with a passion for creating efficient, Protective-base, functional, and user-friendly websites. With expertise in both front-end and back-end development, I bring ideas to life through code.";
-                        echo $about_text;
-                        ?>
+                        I'm a starting web developer with a passion for creating efficient, Protective-base, functional, and user-friendly websites. With expertise in both front-end and back-end development, I bring ideas to life through code.
                     </p>
                 </div>
                 <div class="col-lg-6">
-                    <!-- Add your professional image here -->
                     <img src="https://th.bing.com/th/id/OIP.mPqg73O-_Ssyj2uCR9G1yAHaHa?cb=iwp2&rs=1&pid=ImgDetMain" alt="Profile" class="img-fluid rounded">
                 </div>
             </div>
@@ -227,27 +186,54 @@ Message:
         <div class="container">
             <h2 class="text-center mb-5">Skills & Technologies</h2>
             <div class="row">
-                <?php
-                $skills = [
-                    ["HTML5", "fab fa-html5", "https://developer.mozilla.org/en-US/docs/Web/HTML"],
-                    ["CSS3", "fab fa-css3-alt", "https://developer.mozilla.org/en-US/docs/Web/CSS"],
-                    ["JavaScript", "fab fa-js", "https://developer.mozilla.org/en-US/docs/Web/JavaScript"],
-                    ["PHP", "fab fa-php", "https://www.php.net/docs.php"],
-                    ["C++", "devicon-cplusplus-plain colored", "https://cplusplus.com/doc/tutorial/"],
-                    ["MySQL", "fas fa-database", "https://dev.mysql.com/doc/"]
-                ];
-
-                foreach ($skills as $skill) {
-                    echo '<div class="col-md-4 col-lg-3">';
-                    echo '<a href="' . $skill[2] . '" target="_blank" class="text-decoration-none">';
-                    echo '<div class="skill-card text-center">';
-                    echo '<i class="' . $skill[1] . ' fa-3x mb-3"></i>';
-                    echo '<h4>' . $skill[0] . '</h4>';
-                    echo '</div>';
-                    echo '</a>';
-                    echo '</div>';
-                }
-                ?>
+                <div class="col-md-4 col-lg-3">
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="text-decoration-none">
+                        <div class="skill-card text-center">
+                            <i class="fab fa-html5 fa-3x mb-3"></i>
+                            <h4>HTML5</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" class="text-decoration-none">
+                        <div class="skill-card text-center">
+                            <i class="fab fa-css3-alt fa-3x mb-3"></i>
+                            <h4>CSS3</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="text-decoration-none">
+                        <div class="skill-card text-center">
+                            <i class="fab fa-js fa-3x mb-3"></i>
+                            <h4>JavaScript</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <a href="https://www.php.net/docs.php" target="_blank" class="text-decoration-none">
+                        <div class="skill-card text-center">
+                            <i class="fab fa-php fa-3x mb-3"></i>
+                            <h4>PHP</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <a href="https://cplusplus.com/doc/tutorial/" target="_blank" class="text-decoration-none">
+                        <div class="skill-card text-center">
+                            <i class="devicon-cplusplus-plain colored fa-3x mb-3"></i>
+                            <h4>C++</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <a href="https://dev.mysql.com/doc/" target="_blank" class="text-decoration-none">
+                        <div class="skill-card text-center">
+                            <i class="fas fa-database fa-3x mb-3"></i>
+                            <h4>MySQL</h4>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -257,41 +243,36 @@ Message:
         <div class="container">
             <h2 class="text-center mb-5">My Projects</h2>
             <div class="row">
-                <?php
-                $projects = [
-                    [
-                        "title" => "CSD LMS",
-                        "description" => "Developed a modern Learning Management System for the Computer Studies Department featuring a secure and intuitive login interface. This system streamlines the educational process with user-friendly navigation and robust authentication, enhancing the learning experience for both students and faculty.",
-                        "image" => "ims/Screenshot 2025-05-15 215335.png",
-                        "link" => "projects/csd-lms.php"
-                    ],
-                    [
-                        "title" => "Course Activity Management System",
-                        "description" => "Engineered a comprehensive Course Management System that revolutionizes how students interact with their academic schedule. Features include real-time activity tracking, dynamic course management, and an intuitive calendar interface. The system offers automated deadline reminders, integrated progress tracking, and collaborative project management tools. This solution has improved student engagement by 60% and helped faculty better monitor class performance through detailed analytics dashboards.",
-                        "image" => "ims/Screenshot 2025-05-15 214456.png",
-                        "link" => "projects/course-management.php"
-                    ],
-                    [
-                        "title" => "Student Management System",
-                        "description" => "Designed and implemented a sophisticated Student Management System that transforms academic planning and student administration. This innovative solution enables students to efficiently manage their course schedules, track academic progress, and optimize their learning journey. Key features include automated schedule conflict detection, real-time grade monitoring, course prerequisite verification, and personalized academic roadmap planning. The system has streamlined administrative processes, reduced scheduling conflicts by 85%, and enhanced student success rates through proactive progress tracking and early intervention alerts.",
-                        "image" => "ims/Screenshot 2025-05-15 214449.png",
-                        "link" => "projects/student-management.php"
-                    ]
-                ];
-
-                foreach ($projects as $project) {
-                    echo '<div class="col-md-6 col-lg-4">';
-                    echo '<div class="project-card">';
-                    echo '<img src="' . $project["image"] . '" alt="' . $project["title"] . '">';
-                    echo '<div class="card-body p-4">';
-                    echo '<h4 style="color: var(--secondary-color);">' . $project["title"] . '</h4>';
-                    echo '<p>' . $project["description"] . '</p>';
-                    echo '<a href="' . $project["link"] . '" class="btn btn-primary">Learn More</a>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-                }
-                ?>
+                <div class="col-md-6 col-lg-4">
+                    <div class="project-card">
+                        <img src="ims/Screenshot 2025-05-15 215335.png" alt="CSD LMS">
+                        <div class="card-body p-4">
+                            <h4 style="color: var(--secondary-color);">CSD LMS</h4>
+                            <p>Developed a modern Learning Management System for the Computer Studies Department featuring a secure and intuitive login interface. This system streamlines the educational process with user-friendly navigation and robust authentication, enhancing the learning experience for both students and faculty.</p>
+                            <a href="projects/csd-lms.html" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="project-card">
+                        <img src="ims/Screenshot 2025-05-15 214456.png" alt="Course Activity Management System">
+                        <div class="card-body p-4">
+                            <h4 style="color: var(--secondary-color);">Course Activity Management System</h4>
+                            <p>Engineered a comprehensive Course Management System that revolutionizes how students interact with their academic schedule. Features include real-time activity tracking, dynamic course management, and an intuitive calendar interface.</p>
+                            <a href="projects/course-management.html" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="project-card">
+                        <img src="ims/Screenshot 2025-05-15 214449.png" alt="Student Management System">
+                        <div class="card-body p-4">
+                            <h4 style="color: var(--secondary-color);">Student Management System</h4>
+                            <p>Designed and implemented a sophisticated Student Management System that transforms academic planning and student administration. This innovative solution enables students to efficiently manage their course schedules and track academic progress.</p>
+                            <a href="projects/student-management.html" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -302,18 +283,8 @@ Message:
             <h2 class="text-center mb-5">Get In Touch</h2>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <?php if (isset($success_message)): ?>
-                        <div class="alert alert-success text-center mb-4">
-                            <?php echo $success_message; ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (isset($error_message)): ?>
-                        <div class="alert alert-danger text-center mb-4">
-                            <?php echo $error_message; ?>
-                        </div>
-                    <?php endif; ?>
                     <div class="contact-form">
-                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>#contact" method="POST">
+                        <form action="https://formspree.io/f/your-form-id" method="POST">
                             <div class="mb-3">
                                 <input type="text" class="form-control" name="name" placeholder="Your Name" required>
                             </div>
@@ -336,7 +307,7 @@ Message:
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start d-flex align-items-center">
-                    <p class="mb-0">&copy; <?php echo date("Y"); ?>  Lorenze Fernandez Prepotente. Do not Steal!</p>
+                    <p class="mb-0">&copy; 2024 Lorenze Fernandez Prepotente. Do not Steal!</p>
                     <img src="https://th.bing.com/th/id/OIP.mPqg73O-_Ssyj2uCR9G1yAHaHa?cb=iwp2&rs=1&pid=ImgDetMain" alt="Profile" class="ms-2 rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                 </div>
                 <div class="col-md-6">
